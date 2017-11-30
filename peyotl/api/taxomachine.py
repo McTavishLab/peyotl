@@ -275,8 +275,8 @@ class _TaxomachineAPIWrapper(_WSWrapper):
         elif self.use_v1:
             self.prefix = '{d}/taxomachine/v1'.format(d=d)
         else:
-            self.prefix = '{d}/v2/tnrs'.format(d=d)
-            self.taxonomy_prefix = '{d}/v2/taxonomy'.format(d=d)
+            self.prefix = '{d}/v{p}/tnrs'.format(d=d, p=self._api_vers)
+            self.taxonomy_prefix = '{d}/v{p}/taxonomy'.format(d=d, p=self._api_vers)
 
     def info(self):
         if self.use_v1:
