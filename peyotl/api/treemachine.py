@@ -218,8 +218,8 @@ class _TreemachineAPIWrapper(_WSWrapper):
         elif self.use_v1:
             self.prefix = '{d}/treemachine/v1'.format(d=d)
         else:
-            self.prefix = '{d}/v2/tree_of_life'.format(d=d)
-            self.graph_prefix = '{d}/v2/graph'.format(d=d)
+            self.prefix = '{d}/v{p}/tree_of_life'.format(d=d, p=self._api_vers)
+            self.graph_prefix = '{d}/v{p}/graph'.format(d=d, p=self._api_vers)
 
     @property
     def current_synth_tree_id(self):
@@ -286,7 +286,7 @@ class _TreemachineAPIWrapper(_WSWrapper):
     def node_info(self, node_id=None, ott_id=None, include_lineage=False):
         if self.use_v1:
             raise NotImplementedError('node_info was added in v2 of the API')
-        uri = '{p}/node_info'.format(p=self.graph_prefix)
+        uri = '{p}/node_info'.format(p=self.prefix)
         data = {'include_lineage': bool(include_lineage)}
         if node_id and ott_id:
             raise ValueError('You can only specify one of node_id or ott_id')
@@ -296,6 +296,8 @@ class _TreemachineAPIWrapper(_WSWrapper):
             data['node_id'] = int(node_id)
         else:
             data['ott_id'] = int(ott_id)
+        print uri
+        print data    
         return self.json_http_post_raise(uri, data=anyjson.dumps(data))
 
     def mrca(self, ott_ids=None, node_ids=None, wrap_response=False):
@@ -363,8 +365,10 @@ class _TreemachineAPIWrapper(_WSWrapper):
     def get_node_id_for_ott_id(self, ott_id):
         uri = '{p}/getNodeIDForottId'.format(p=self.prefix)
         data = {'ottId': str(ott_id)}
+        print uri
+        print data
         return self.json_http_post_raise(uri, data=anyjson.dumps(data))
-
+        
 
 def Treemachine(domains=None, **kwargs):
     return APIWrapper(domains=domains, **kwargs).treemachine
