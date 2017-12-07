@@ -200,6 +200,7 @@ class _TaxomachineAPIWrapper(_WSWrapper):
             return resp
         if wrap_response is True:
             return TNRSResponse(self._wr, resp, query_data=data)
+        #print uri    
         return wrap_response(resp, query_data=data)
 
     def autocomplete(self, name, context_name=None, include_dubious=False):
@@ -231,7 +232,9 @@ class _TaxomachineAPIWrapper(_WSWrapper):
         if self.use_v1:
             raise NotImplementedError("infer_context not wrapped in v1")
         uri = '{p}/infer_context'.format(p=self.prefix)
-        data = {'names': names}
+        #print uri
+        data = {'names': names}    
+        #print data
         return self.json_http_post(uri, data=anyjson.dumps(data))
 
     def __init__(self, domain, **kwargs):
@@ -282,6 +285,7 @@ class _TaxomachineAPIWrapper(_WSWrapper):
         if self.use_v1:
             raise NotImplementedError('"about" method not implemented')
         uri = '{p}/about'.format(p=self.taxonomy_prefix)
+        #print uri
         return self.json_http_post(uri)
 
     about = info
@@ -292,14 +296,17 @@ class _TaxomachineAPIWrapper(_WSWrapper):
         data = {'ott_id': int(ott_id),
                 'include_lineage': bool(include_lineage),
                 'list_terminal_descendants': bool(list_terminal_descendants)}
-        uri = '{p}/taxon'.format(p=self.taxonomy_prefix)
+        uri = '{p}/taxon_info'.format(p=self.taxonomy_prefix)
         r = self.json_http_post(uri, data=anyjson.dumps(data))
+        #print uri
+        #print r
         if 'error' in r:
             raise ValueError(r['error'])
         if wrap_response:
             # TODO we should fetch info about the taxanomy, so that we can
             #   provide a taxonomy kwarg to TaxonWrapper...
             return TaxonWrapper(taxomachine_wrapper=self._wr, prop_dict=r)
+        #print r
         return r
 
     def subtree(self, ott_id):
