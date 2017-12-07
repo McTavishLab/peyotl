@@ -296,8 +296,6 @@ class _TreemachineAPIWrapper(_WSWrapper):
             data['node_id'] = int(node_id)
         else:
             data['ott_id'] = int(ott_id)
-        print uri
-        print data    
         return self.json_http_post_raise(uri, data=anyjson.dumps(data))
 
     def mrca(self, ott_ids=None, node_ids=None, wrap_response=False):
@@ -361,13 +359,11 @@ class _TreemachineAPIWrapper(_WSWrapper):
                     return ValueError('ott_id or node_id must be specified')
                 data['ott_id'] = ott_id
         return self.json_http_post_raise(uri, data=anyjson.dumps(data))
-
-    def get_node_id_for_ott_id(self, ott_id):
-        uri = '{p}/getNodeIDForottId'.format(p=self.prefix)
-        data = {'ottId': str(ott_id)}
-        print uri
-        print data
-        return self.json_http_post_raise(uri, data=anyjson.dumps(data))
+   #FIX ME This is deprecated
+   # def get_node_id_for_ott_id(self, ott_id):
+   #     uri = '{p}/getNodeIDForottId'.format(p=self.prefix)
+   #     data = {'ottId': str(ott_id)}
+   #     return self.json_http_post_raise(uri, data=anyjson.dumps(data))
         
 
 def Treemachine(domains=None, **kwargs):
