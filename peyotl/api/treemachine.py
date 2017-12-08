@@ -201,6 +201,7 @@ class _TreemachineAPIWrapper(_WSWrapper):
                                                                        ('apis', 'api_version')],
                                                                       "2")
         self.use_v1 = (self._api_vers == "1")
+        self.use_v3 = (self._api_vers == "3")
         _WSWrapper.__init__(self, domain, **kwargs)
         self.domain = domain
 
@@ -235,8 +236,11 @@ class _TreemachineAPIWrapper(_WSWrapper):
     def synthetic_tree_info(self):
         if self.use_v1:
             uri = '{p}/getDraftTreeID'.format(p=self.prefix)
+        if self.use_v3:
+            uri = 'https://api.opentreeoflife.org/v2/tree_of_life/about'   
         else:
             uri = '{p}/about'.format(p=self.prefix)
+            print uri
         return self.json_http_post_raise(uri)
 
     @property
@@ -276,6 +280,7 @@ class _TreemachineAPIWrapper(_WSWrapper):
             uri = '{p}/getSyntheticTree'.format(p=self.prefix)
         else:
             uri = '{p}/subtree'.format(p=self.prefix)
+        print ott_id    
         return self._get_tree(uri,
                               tree_id=tree_id,
                               format=format,
