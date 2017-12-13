@@ -147,7 +147,10 @@ class _OTIWrapper(_WSWrapper):
         if self.use_v1:
             uri = '{p}/singlePropertySearchForStudies'.format(p=self.query_prefix)
         else:
+            print 'your are in else of the find_studies command'
             uri = '{p}/find_studies'.format(p=self.query_prefix)
+        print uri
+        #print query_dict
         return self._do_query(uri,
                               query_dict=query_dict,
                               exact=exact,
@@ -171,6 +174,7 @@ class _OTIWrapper(_WSWrapper):
             dict.
         """
         if not self.use_v1:
+            print "I'll use the find_studies-command"
             return self.find_studies(verbose=verbose)
         url = '{p}/findAllStudies'.format(p=self.query_prefix)
         data = {'includeTreeMetadata': include_trees,
@@ -219,7 +223,7 @@ class _OTIWrapper(_WSWrapper):
                 self.query_prefix = '{d}/oti/QueryServices/graphdb'.format(d=d)
             else:
                 self.indexing_prefix = '{d}/oti/IndexServices/graphdb'.format(d=d)
-                self.query_prefix = '{d}/v2/studies'.format(d=d)
+                self.query_prefix = '{d}/v{p}/studies'.format(d=d, p=self._api_vers)
 
     @property
     def node_search_term_set(self):
