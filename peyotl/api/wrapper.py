@@ -424,6 +424,9 @@ class _TreeOfLifeServicesWrapper(object):
     def mrca(self, *valist, **kwargs):
         return self.treemachine.mrca(*valist, **kwargs)
 
+    def node_info(self, *valist, **kwargs):
+        return self.treemachine.node_info(*valist, **kwargs)
+
     def subtree(self, *valist, **kwargs):
         return self.treemachine.get_synthetic_tree(*valist, **kwargs)
 
