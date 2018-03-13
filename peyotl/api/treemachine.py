@@ -312,6 +312,7 @@ class _TreemachineAPIWrapper(_WSWrapper):
         resp = self.json_http_post_raise(uri, data=anyjson.dumps(data))
         if wrap_response:
             return MRCAGoLNode(resp, treemachine_wrapper=self)
+            #Not working with v3?
         return resp
 
     def get_synth_tree_pruned(self, tree_id=None, node_ids=None, ott_ids=None):

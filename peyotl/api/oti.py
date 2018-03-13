@@ -147,10 +147,7 @@ class _OTIWrapper(_WSWrapper):
         if self.use_v1:
             uri = '{p}/singlePropertySearchForStudies'.format(p=self.query_prefix)
         else:
-            print 'your are in else of the find_studies command'
             uri = '{p}/find_studies'.format(p=self.query_prefix)
-        print uri
-        #print query_dict
         return self._do_query(uri,
                               query_dict=query_dict,
                               exact=exact,
@@ -174,7 +171,6 @@ class _OTIWrapper(_WSWrapper):
             dict.
         """
         if not self.use_v1:
-            print "I'll use the find_studies-command"
             return self.find_studies(verbose=verbose)
         url = '{p}/findAllStudies'.format(p=self.query_prefix)
         data = {'includeTreeMetadata': include_trees,
