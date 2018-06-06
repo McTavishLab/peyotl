@@ -246,7 +246,7 @@ class OTT(object):
         if ott_dir is None:
             raise ValueError('Either the ott_dir arg must be used or "parent" must '
                              'exist in the "[ott]" section of your config (~/.peyotl/config by default)')
-        self.ott_dir = ott_dir
+        self.ott_dir = os.path.expanduser(ott_dir)
         if not os.path.isdir(self.ott_dir):
             raise ValueError('"{}" is not a directory'.format(self.ott_dir))
         # self.skip_prefixes = ('environmental samples (', 'uncultured (', 'Incertae Sedis (')
