@@ -184,7 +184,7 @@ class _OTIWrapper(_WSWrapper):
             self._config = get_config_object()
         self._api_vers = self._config.get_from_config_setting_cascade([('apis', 'oti_api_version'),
                                                                        ('apis', 'api_version')],
-                                                                      "2")
+                                                                      "3")
         self.use_v1 = (self._api_vers == "1")
         self._node_search_prop = None
         self._search_terms = None

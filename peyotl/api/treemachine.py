@@ -199,9 +199,10 @@ class _TreemachineAPIWrapper(_WSWrapper):
         self._raw_urls = (r.lower() == 'true')
         self._api_vers = self._config.get_from_config_setting_cascade([('apis', 'treemachine_api_version'),
                                                                        ('apis', 'api_version')],
-                                                                      "2")
+                                                                      "3")
         self.use_v1 = (self._api_vers == "1")
         self.use_v3 = (self._api_vers == "3")
+        assert self.use_v3 == True
         _WSWrapper.__init__(self, domain, **kwargs)
         self.domain = domain
 
@@ -306,7 +307,7 @@ class _TreemachineAPIWrapper(_WSWrapper):
     def mrca(self, ott_ids=None, node_ids=None, wrap_response=False):
         if not (ott_ids or node_ids):
             raise ValueError('ott_ids or node_ids must be specified')
-        assert not self.use_v1
+        assert self.use_v3
         uri = '{p}/mrca'.format(p=self.prefix)
         data = {'ott_ids': ott_ids, 'node_ids': node_ids}
         resp = self.json_http_post_raise(uri, data=anyjson.dumps(data))
